@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>⚡ QR Code Generator</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #b4159f, #8f2548);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.2s ease-in;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            padding: 50px 70px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            transition: transform 0.4s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-size: 2.3em;
+            color: #fff;
+            text-shadow: 0 0 10px #11c75d, 0 0 20px #2a5298;
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            from { text-shadow: 0 0 10px #11c75d; }
+            to { text-shadow: 0 0 25px #11c75d, 0 0 40px #2a5298; }
+        }
+
+        textarea, select, input[type="file"] {
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+        }
+
+        textarea::placeholder {
+            color: #e0e0e0;
+        }
+
+        textarea:focus, select:focus, input[type="file"]:focus {
+            box-shadow: 0 0 12px #11c75d;
+            transform: scale(1.03);
+        }
+
+        /* Dropdown styling fix */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        option {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 12px 28px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(90deg, #0f9b0f, #11c75d);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(17, 199, 93, 0.4);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #11c75d, #34b415);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(17, 199, 93, 0.7);
+        }
+
+        label, h3 {
+            color: #e8e8e8;
+        }
+
+        #file {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ddd;
+            border: 1px dashed #ccc;
+            width: 75%;
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="/generate" method="POST" enctype="multipart/form-data">
+            <h1>⚡ QR CODE GENERATOR ⚡</h1>
+            <br><br>
+            
+            <div class="form-group">
+                <label for="type"><h3>Select QR Code Type:</h3></label>
+                <select name="type" id="type" onchange="toggleInput()">
+                    <option value="text">Text</option>
+                    <option value="url">URL</option>
+                    <option value="image">Image / Video</option>
+                </select>
+            </div>
+
+            <br>
+            
+            <div class="form-group" id="textInput">
+                <label for="data"><h3>Enter Your Data:</h3></label>
+                <textarea name="data" id="data" placeholder="Type text or paste a link..." required></textarea>
+            </div>
+            <br>
+
+            <div class="form-group" id="fileInput" style="display: none;">
+                <label for="file"><h3>Upload an Image or Video:</h3></label><br>
+                <input type="file" name="file" id="file" accept="image/*,video/*">
+            </div>
+            <br><br>
+
+            <button type="submit">🚀 Generate QR Code</button>
+
+            <footer>
+                <p>Made with 💚 using Flask & Python by <b>Manish N</b></p>
+            </footer>
+        </form>
+    </div>
+
+    <script>
+        function toggleInput() {
+            const type = document.getElementById("type").value;
+            const textInput = document.getElementById("textInput");
+            const fileInput = document.getElementById("fileInput");
+            const textArea = document.getElementById("data");
+
+            if (type === "image") {
+                fileInput.style.display = "block";
+                textInput.style.display = "none";
+                textArea.removeAttribute("required");
+            } else {
+                fileInput.style.display = "none";
+                textInput.style.display = "block";
+                textArea.setAttribute("required", true);
+            }
+        }
+    </script>
+</body>
+</html>
