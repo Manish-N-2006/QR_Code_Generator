@@ -3,3 +3,4 @@ qrcode
 Pillow
 cloudinary
 python-dotenv
+gunicorn
