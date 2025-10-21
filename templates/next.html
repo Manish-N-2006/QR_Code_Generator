@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>QR Code Result</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #fff;
+            margin-top: 60px;
+        }
+
+        h1, h2, h3 {
+            margin: 10px;
+        }
+
+        img {
+            margin-top: 20px;
+            border: 3px solid #fff;
+            border-radius: 16px;
+            width: 250px;
+            height: 250px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+
+        button {
+            background-color: #55cf0f;
+            color: white;
+            font-size: 16px;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #965920;
+            transform: scale(1.05);
+        }
+
+        a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            display: inline-block;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(6px);
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="container">
+            <h1>✨ QR Code Generated Successfully ✨</h1>
+            <p>Scan it, share it, or download it instantly!</p>
+            <br>
+            <img id="qrImage" src="data:image/png;base64,{{ img_str }}" alt="QR Code">
+            <br><br>
+            <a href="{{ data }}" target="_blank"><h3>🔗 Open Encoded Link</h3></a>
+            <br>
+            <a href="/" style="text-decoration:none;"><h3>↩️ Generate Another</h3></a>
+            <br><br>
+            <a id="downloadLink" href="data:image/png;base64,{{ img_str }}" download="qrcode.png">
+                <button>⬇️ Download QR Code</button>
+            </a>
+        </div>
+
+        <footer>
+            <p>🚀 Crafted with ❤️ using Flask & Python | Designed by <b>Manish N</b></p>
+        </footer>
+    </center>
+
+    <script>
+        const qrImage = document.getElementById('qrImage');
+        const downloadLink = document.getElementById('downloadLink');
+        downloadLink.href = qrImage.src;
+    </script>
+</body>
+</html>
