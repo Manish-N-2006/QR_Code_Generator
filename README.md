@@ -19,13 +19,9 @@ It allows users to generate QR codes for **text, URLs, or uploaded files (images
 
 ---
 
-## 🖼️ Screenshots
+## 🖼️ Website
 
-| Home Page | Result Page |
-|------------|-------------|
-| ![Home](https://via.placeholder.com/400x250?text=Home+Page+Preview) | ![Result](https://via.placeholder.com/400x250?text=QR+Result+Preview) |
-
-*(Replace the placeholder links with actual screenshots from your app)*
+ ![Link](https://qr-code-generator-8gl1.onrender.com/) 
 
 ---
 
