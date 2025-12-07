@@ -5,18 +5,24 @@ from io import BytesIO
 import base64
 import cloudinary
 import cloudinary.uploader
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
+import threading
+import time
 
 app = Flask(__name__)
+last_qr_image = None
 
 cloudinary.config(
-    cloud_name=os.getenv("cloud_name"),
-    api_key=os.getenv("api_key"),
-    api_secret=os.getenv("api_secret")
+    cloud_name="duj4voe8t",
+    api_key="574666997461163",
+    api_secret="CxOktlc7_hsSuZU0Mhbbi0Cvpgw"
 )
+
+
+def auto_delete_file(public_id, delay_seconds=86400,resource_type = "raw"):
+    def delete():
+        time.sleep(delay_seconds)
+        cloudinary.uploader.destroy(public_id,resource_type=resource_type)
+    threading.Thread(target=delete,daemon=True).start()
 
 @app.route("/")
 
@@ -25,17 +31,31 @@ def index():
 
 @app.route("/generate",methods=['POST'])
 def generate_qr():
+    global last_qr_image
     qr_type = request.form.get("type")
     img_str = ""
 
-    if qr_type == "image":
+    if qr_type == "image" or qr_type == "file":
         file = request.files.get("file")
         if not file:
             return "No file uploaded", 400
-        
-        upload_result = cloudinary.uploader.upload(file)
-        file_url = upload_result["secure_url"]        
+        mime_type = file.mimetype
+        if mime_type.startswith("image/"):
+            res_type = "image"
+        elif mime_type.startswith("video/"):
+            res_type = "video"
+        else:
+            res_type = "auto" 
+            
+        upload_result = cloudinary.uploader.upload(file, resource_type = res_type)
+        file_url = upload_result["secure_url"] 
+
+        if res_type == "auto" and not (mime_type.startswith("image/") or mime_type.startswith("video/")):
+            file_url += "?attachment=true"
+
+        public_id = upload_result["public_id"]
         data = file_url
+        auto_delete_file(public_id,resource_type = res_type)
 
     else:
         data = request.form.get("data")
