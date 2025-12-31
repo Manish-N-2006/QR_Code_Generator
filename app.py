@@ -7,14 +7,16 @@ import cloudinary
 import cloudinary.uploader
 import threading
 import time
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 last_qr_image = None
 
 cloudinary.config(
-    cloud_name="duj4voe8t",
-    api_key="574666997461163",
-    api_secret="CxOktlc7_hsSuZU0Mhbbi0Cvpgw"
+    cloud_name=os.getenv(cloud_name),
+    api_key=os.getenv(api_key),
+    api_secret=os.get(api_secret)"
 )
 
 
